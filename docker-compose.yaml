@@ -1,0 +1,15 @@
+version: '3'
+services:
+  localstack:
+    container_name: Local_AWS-Stack
+    image: localstack/localstack
+    mem_limit: 8192m
+    mem_reservation: 2048m
+    cpus: 2
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=dynamodb
+      - DEFAULT_REGION=ap-southeast-2
+      - LAMBDA_EXECUTOR=local
+      - DATA_DIR=/tmp/localstack/data

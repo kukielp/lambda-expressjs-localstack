@@ -1,3 +1,11 @@
+tmp
+.aws-sam
+samconfig.toml
+.DS_Store
+
+
+
+
 # Logs
 logs
 *.log
