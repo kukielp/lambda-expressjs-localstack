@@ -36,7 +36,7 @@ router.get('/', function(req, res) {
 })
 
 router.get('/birdy.jpg', (req, res) => {
-    let fileName = "bird.jpg"; 
+    let fileName = "bird.jpeg"; 
     res.setHeader('Content-disposition', 'inline; filename="' + fileName + '"')
     res.setHeader('Content-type', 'image/jpeg')
     res.setHeader('isBase64Encoded', true)
