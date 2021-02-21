@@ -37,8 +37,8 @@ router.get('/', function(req, res) {
 
 router.get('/birdy.jpg', (req, res) => {
     let fileName = "bird.jpeg"; 
-    res.setHeader('Content-disposition', 'inline; filename="' + fileName + '"')
-    res.setHeader('Content-type', 'image/jpeg')
+    res.setHeader('Content-Disposition', 'inline; filename="' + fileName + '"')
+    res.setHeader('Content-Type', 'image/jpeg')
     res.setHeader('isBase64Encoded', true)
 
     rBody = fs.readFileSync(`${__dirname}/public/bird.jpg`);
