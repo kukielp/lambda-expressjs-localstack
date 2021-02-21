@@ -39,13 +39,12 @@ router.get('/birdy.jpg', (req, res) => {
     let fileName = "bird.jpg"; 
     res.setHeader('Content-disposition', 'inline; filename="' + fileName + '"')
     res.setHeader('Content-type', 'image/jpeg')
-    res.setHeader('isBase64Encoded', false)
-    
-    rBody = fs.readFileSync(`${__dirname}/public/bird.jpg`, 'utf8');
+    res.setHeader('isBase64Encoded', true)
+
+    rBody = fs.readFileSync(`${__dirname}/public/bird.jpg`);
     let bufferObj = Buffer.from(rBody, "utf8")
     let responseBody = bufferObj.toString("base64")
     res.status(200).send(responseBody);
-    
 })
 
 router.get('/testrender', function(req, res) {

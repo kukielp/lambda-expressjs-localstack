@@ -7,11 +7,13 @@ const binaryMimeTypes = [
     'font/eot',
     'font/opentype',
     'font/otf',
-    //'image/jpeg',
+    'image/jpeg',
     'image/png',
     'image/svg+xml',
+
+
 ]
 
-const server = awsServerlessExpress.createServer(app, null, binaryMimeTypes)
+const server = awsServerlessExpress.createServer(app, null)
 
 exports.handler = (event, context, callback) => { return awsServerlessExpress.proxy(server, event, context) };

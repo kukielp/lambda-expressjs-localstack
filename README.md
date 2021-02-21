@@ -19,6 +19,7 @@ http://localhost:3000/search/1991
 http://localhost:3000/moviedata/1991/Beauty%20and%20the%20Beast
 
 POSTS:
+Increament, update, create
 
 Browse static:
 
