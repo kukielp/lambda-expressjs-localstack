@@ -24,6 +24,6 @@
     "npm-watch": "^0.7.0"
   },
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.local.js"
   }
 }
