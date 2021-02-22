@@ -7,6 +7,11 @@ Globals:
     Timeout: 600
 
 Resources:
+  ExpressApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      BinaryMediaTypes: ['*/*']
       
   ExpressFunction:
     Type: AWS::Serverless::Function 
@@ -19,6 +24,7 @@ Resources:
         ExpressFunction:
           Type: Api
           Properties:
+            RestApiId: !Ref ExpressApi
             Path: "/{proxy+}"
             Method: ANY
             
@@ -47,7 +53,7 @@ Outputs:
 
   ExpressFunctiondApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Value: !Sub "https://${ExpressApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
   ExpressFunction:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt ExpressFunction.Arn

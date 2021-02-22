@@ -9,13 +9,16 @@ const fs = require('fs')
 const path = require('path')
 const loremIpsum = require("lorem-ipsum").loremIpsum;
 
+//Static content ie images
 app.use('/static', express.static('public'))
 
 AWS.config.update({
     region: 'ap-southeast-2',
+//Fix this so we check what enviroment we are runnign in
     //endpoint:'http://localhost:4566',
 });
 
+//Fix to be an env varibale
 const table = "Movies"
 const ddbClient = new AWS.DynamoDB.DocumentClient();
 
@@ -35,20 +38,13 @@ router.get('/', function(req, res) {
     res.render('index', { title: 'Default Route' })
 })
 
-router.get('/birdy.jpg', (req, res) => {
-    let fileName = "bird.jpeg"; 
-    res.setHeader('Content-Disposition', 'inline; filename="' + fileName + '"')
-    res.setHeader('Content-Type', 'image/jpeg')
-    res.setHeader('isBase64Encoded', true)
-
-    rBody = fs.readFileSync(`${__dirname}/public/bird.jpg`);
-    let bufferObj = Buffer.from(rBody, "utf8")
-    let responseBody = bufferObj.toString("base64")
-    res.status(200).send(responseBody);
-})
-
 router.get('/testrender', function(req, res) {
     res.render('index', { title: 'Some random Text' })
+})
+
+//Send Single File
+router.get('/birdy.jpg', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/bird.jpg'))
 })
 
 router.get('/cleanup', async (req, res) => {
@@ -64,6 +60,9 @@ router.get('/cleanup', async (req, res) => {
     }
 })
 
+//Normally don;t want to provide lambda with access to create table in Dynamo
+//and we woudl just use cf to create the table.
+//This is usefull for this example to create the table locally and load it with sample data
 router.get('/load', async (req, res) => {
     const dynamodb = new AWS.DynamoDB();
 

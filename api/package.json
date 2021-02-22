@@ -7,18 +7,18 @@
   "author": "SAM CLI",
   "license": "MIT",
   "dependencies": {
+    "@vendia/serverless-express": "^4.3.2",
     "aws-sdk": "^2.832.0",
     "aws-serverless-express": "^3.4.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "lorem-ipsum": "^2.0.3",
-    "pug": "^3.0.0",
-    "ejs": "^3.1.6"
+    "pug": "^3.0.0"
   },
   "devDependencies": {
-    
     "nodejs-hot-reload": "^0.1.2",
     "nodemon": "^2.0.7",
     "npm-watch": "^0.7.0"
