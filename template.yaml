@@ -19,7 +19,7 @@ Resources:
       CodeUri: api/
       Handler: lambda.handler
       Runtime: nodejs14.x
-      MemorySize: 3008
+      MemorySize: 512
       Events:
         ExpressFunction:
           Type: Api

@@ -4,7 +4,7 @@ const router = express.Router()
 const AWS = require('aws-sdk')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+//const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const fs = require('fs')
 const path = require('path')
 const loremIpsum = require("lorem-ipsum").loremIpsum;
@@ -25,7 +25,7 @@ const ddbClient = new AWS.DynamoDB.DocumentClient();
 router.use(cors())
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
-router.use(awsServerlessExpressMiddleware.eventContext())
+//router.use(awsServerlessExpressMiddleware.eventContext())
 
 require('./routes/gets')(router, ddbClient, table)
 require('./routes/posts')(router, ddbClient, table, loremIpsum)
