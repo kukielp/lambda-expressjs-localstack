@@ -4,6 +4,7 @@ module.exports = function(router, docClient, table, loremIpsum){
 
         const year = req.body.year;
         const title = req.body.title;
+        console.log(req.body)
         const params = {
             TableName:table,
             Key:{
@@ -21,6 +22,7 @@ module.exports = function(router, docClient, table, loremIpsum){
             const data = await docClient.update(params).promise()
             res.send(JSON.stringify(data))
         } catch (err) {
+            console.log(err)
             res.status(500).send('Something broke!')
         }
     })
@@ -45,6 +47,7 @@ module.exports = function(router, docClient, table, loremIpsum){
             const data = await docClient.put(params).promise()
             res.send(JSON.stringify(params.Item))
         } catch (err) {
+            console.log(err)
             res.status(500).send('Something broke!')
         }
     })
@@ -67,7 +70,7 @@ module.exports = function(router, docClient, table, loremIpsum){
 
         try {
             const data = await docClient.put(params).promise()
-            res.send(JSON.stringify(data))
+            res.send(JSON.stringify(params.Item))
         } catch (err) {
             res.status(500).send('Something broke!')
         }
@@ -84,14 +87,14 @@ module.exports = function(router, docClient, table, loremIpsum){
                 "title": title,
                 "info":{
                     "plot": "Nothing happens at all.",
-                    "rating": 0
+                    "rating": 100
                 }
             }
         }
 
         try {
             const data = await docClient.put(params).promise()
-            res.send(JSON.stringify(data))
+            res.send(JSON.stringify(params.Item))
         } catch (err) {
             res.status(500).send('Something broke!')
         }

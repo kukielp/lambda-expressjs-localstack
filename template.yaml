@@ -12,6 +12,11 @@ Resources:
     Properties:
       StageName: prod
       BinaryMediaTypes: ['*/*']
+      Domain:
+        DomainName: {put-domain-name-here}
+        CertificateArn: {put-acm-arm-here}
+        Route53:
+          HostedZoneId: {put-hosted-zon-id-here}
       
   ExpressFunction:
     Type: AWS::Serverless::Function 

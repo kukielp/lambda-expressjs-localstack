@@ -1,9 +1,223 @@
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.12.1/underscore-min.js" integrity="sha512-MlLC+OTHLccQVYJj0oRc7LL9MBaC7EnFpVAPuru/G6Nirwsj9MVsrw+GOrkJDRQEa6/0TutTcoik9VRa53DySw==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js" integrity="sha512-9EgQDzuYx8wJBppM4hcxK8iXc5a1rFLp/Chug4kIcSWRDEgjMiClF8Y3Ja9/0t8RDDg19IfY5rs6zaPS9eaEBw==" crossorigin="anonymous"></script>
+<script src="https://warfares.github.io/pretty-json/pretty-json-min.js"></script>
+<script>
+  getSearchYear = function(){
+    
+      const year = document.getElementById('year').value;
+      const r = new XMLHttpRequest();
+      r.open("GET", `/search/${year}`, true);
+      r.onload = function () {
+        let node = new PrettyJSON.view.Node({
+          el:$('#output-object'),
+          data:JSON.parse(r.responseText)
+        });
+        node.expandAll();
+      };
+      r.send(); 
+  }
+
+  getSearchYearTitle = function(){
+    
+    const year = document.getElementById('ytYear').value;
+    const title = document.getElementById('ytTitle').value;
+    const r = new XMLHttpRequest(); 
+    r.open("GET", `/movieData/${year}/${title}`, true);
+    r.onload = function () {
+      let node = new PrettyJSON.view.Node({
+        el:$('#output-object'),
+        data:JSON.parse(r.responseText)
+      });
+      node.expandAll();
+    };
+    r.send(); 
+  }
+
+  create = function(){
+    
+    const year = document.getElementById('createYear').value;
+    const title = document.getElementById('createTitle').value;
+    const r = new XMLHttpRequest(); 
+
+    r.open("POST", `/create`, true);
+    r.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    r.send(JSON.stringify({ "year": parseInt(year), "title": title }));
+    r.onload = function () {
+      let node = new PrettyJSON.view.Node({
+        el:$('#output-object'),
+        data:JSON.parse(r.responseText)
+      });
+      node.expandAll();
+    };
+    r.send(); 
+  }
+
+  update = function(){
+    
+    const year = document.getElementById('updateYear').value;
+    const title = document.getElementById('updateTitle').value;
+    const r = new XMLHttpRequest(); 
+
+    r.open("POST", `/update`, true);
+    r.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    r.send(JSON.stringify({ "year": parseInt(year), "title": title }));
+    r.onload = function () {
+      let node = new PrettyJSON.view.Node({
+        el:$('#output-object'),
+        data:JSON.parse(r.responseText)
+      });
+      node.expandAll();
+    };
+    r.send(); 
+  }
+
+  increment = function(){
+    
+    const year = document.getElementById('incrementYear').value;
+    const title = document.getElementById('incrementTitle').value;
+    const r = new XMLHttpRequest(); 
+
+    r.open("POST", `/increamentRating`, true);
+    r.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    r.send(JSON.stringify({ "year": parseInt(year), "title": title }));
+    r.onload = function () {
+      let node = new PrettyJSON.view.Node({
+        el:$('#output-object'),
+        data:JSON.parse(r.responseText)
+      });
+      node.expandAll();
+    };
+    r.send(); 
+  }
+
+  createDelete = function(){
+    
+    const r = new XMLHttpRequest(); 
+
+    r.open("POST", `/createDeleteSample`, true);
+    r.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    r.send();
+    r.onload = function () {
+      let node = new PrettyJSON.view.Node({
+        el:$('#output-object'),
+        data:JSON.parse(r.responseText)
+      });
+      node.expandAll();
+    };
+    r.send(); 
+  }
+
+  deleteMovie = function(){
+    
+    const r = new XMLHttpRequest(); 
+
+    r.open("DELETE", `/delete`, true);
+    r.onload = function () {
+      let node = new PrettyJSON.view.Node({
+        el:$('#output-object'),
+        data:JSON.parse(r.responseText)
+      });
+      node.expandAll();
+    };
+    r.send(); 
+  }
+</script>
+<style>
+  body {
+    padding: 3rem;
+    font-size: 16px;
+  }
+
+  /* Split the screen in half */
+  .split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+  /* Control the left side */
+  .left {
+    left: 0;
+  }
+
+  /* Control the right side */
+  .right {
+    right: 0;
+  }
+</style>
 
 
-<h1><%= title %></h1>
 
-<ul>
-  <li><a href="/search/1991">Search By Year</a> page.</li>
-  <li><a href="/movieData/1991/Beauty and the Beast">Get Movie by Year and Title</a> page.</li>
 
-</ul>
+
+<div class="split left">
+  <div class="">
+    <h1><%= title %></h1>
+    <p>Here are a few options to explore:</p>
+    <ul>
+      <li><a href="/testrender">Serverside render</a> using <a target="_black" href="https://ejs.co/">ejs</a></li>
+      <li><a target="_black" href="/static/bird.jpg">Render static assets</a> ( pubish to the public folder )</li>
+      API - GETS:
+      <li>
+        <a href="/search/1991">Search By Year</a> page.
+        Demo: <input id="year" value="2009">
+        <button onClick="getSearchYear()">Test</button>
+      </li>
+      <li>
+        <a href="/movieData/1991/Beauty and the Beast">Get Movie by Year and Title</a> page.
+        Demo: 
+        Year: <input id="ytYear" value="1991">
+        Year: <input id="ytTitle" value="Beauty and the Beast">
+        <button onClick="getSearchYearTitle()">Test</button>
+        
+      </li>
+      POSTS:
+      <li><a href="/create">Create a new movie</a>
+      Demo: 
+        Year: <input id="createYear" value="1991">
+        Year: <input id="createTitle" value="Beauty and the Beast">
+        <button onClick="create()">Test</button>
+      </li>
+      <li><a href="/update">Update the plot and rating for a movie</a>
+      Demo: 
+        Year: <input id="updateYear" value="1991">
+        Year: <input id="updateTitle" value="Beauty and the Beast">
+        <button onClick="update()">Test</button>
+      </li>
+      <li><a href="/increamentRating">Increment the rating of a movie</a>.
+        Demo: 
+        Year: <input id="incrementYear" value="1991">
+        Year: <input id="incrementTitle" value="Beauty and the Beast">
+        <button onClick="increment()">Test</button>
+      </li>
+      <li><a href="/createDeleteSample">Create a simple item to delete</a>
+        Demo: 
+        <button onClick="createDelete()">Test</button>
+      </li>
+
+
+      DELETES:
+      <li><a href="/delete">Delete a movie</a>
+        <button onClick="deleteMovie()">Test</button>
+      </li>
+    </ul>
+    <p>
+      *note there is a condition on deleteing, the movie must have a rating of >5, you can use increment movie 6 times to achive this or use update plot and rating which will increase the rating to 100.
+    </p>
+    <p>
+      **Deleting is hard coded to the "createDeleteSample" movie.
+    </p>
+  </div>
+</div>
+
+<div class="split right">
+  <div class="">
+    <h1>Output</h1>
+    <pre name="" id="output-object"></pre>
+  </div>
+</div>

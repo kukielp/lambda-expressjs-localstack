@@ -4,19 +4,18 @@ const router = express.Router()
 const AWS = require('aws-sdk')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-//const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const fs = require('fs')
 const path = require('path')
 const loremIpsum = require("lorem-ipsum").loremIpsum;
 
-//Static content ie images
-app.use('/static', express.static('public'))
-
 AWS.config.update({
     region: 'ap-southeast-2',
-//Fix this so we check what enviroment we are runnign in
+    //Fix this so we check what enviroment we are runnign in
     //endpoint:'http://localhost:4566',
-});
+})
+
+//Static content ie images
+app.use('/static', express.static('public'))
 
 //Fix to be an env varibale
 const table = "Movies"
@@ -25,7 +24,6 @@ const ddbClient = new AWS.DynamoDB.DocumentClient();
 router.use(cors())
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }))
-//router.use(awsServerlessExpressMiddleware.eventContext())
 
 require('./routes/gets')(router, ddbClient, table)
 require('./routes/posts')(router, ddbClient, table, loremIpsum)
@@ -38,8 +36,12 @@ router.get('/', function(req, res) {
     res.render('index', { title: 'Default Route' })
 })
 
+router.get('/index', function(req, res) {
+    res.render('index', { title: 'Default Route' })
+})
+
 router.get('/testrender', function(req, res) {
-    res.render('index', { title: 'Some random Text' })
+    res.render('testrender', { title: 'Some random Text' })
 })
 
 //Send Single File
@@ -61,7 +63,7 @@ router.get('/cleanup', async (req, res) => {
 })
 
 //Normally don;t want to provide lambda with access to create table in Dynamo
-//and we woudl just use cf to create the table.
+//and we woudl just use Cloudformation to create the table.
 //This is usefull for this example to create the table locally and load it with sample data
 router.get('/load', async (req, res) => {
     const dynamodb = new AWS.DynamoDB();

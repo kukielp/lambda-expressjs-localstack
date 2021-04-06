@@ -17,10 +17,14 @@ module.exports = function(router, ddbClient, table){
         
         try {
             const data = await ddbClient.delete(params).promise()
-            res.send(JSON.stringify(data))
+            res.send(JSON.stringify({"message":"Movie deleted"}))
         } catch (err) {
-            console.log(err)
-            res.status(500).send('Something broke!')
+            console.log(err.code)
+            if (err.code === 'ConditionalCheckFailedException'){
+                res.status(500).send(JSON.stringify({message:"Record not present"}))
+            }else{
+                res.status(500).send('Something broke!')
+            }
         }
     })
 
